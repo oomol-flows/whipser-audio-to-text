@@ -1,0 +1,254 @@
+nodes:
+  - task:
+      ui:
+        default_width: 350
+      icon: https://api.iconify.design/logos:python.svg?color=%23888888
+      inputs_def:
+        - handle: mode
+          description: Input
+          json_schema:
+            type: string
+            enum:
+              - tiny
+              - base
+              - small
+              - medium
+              - large
+          value: tiny
+        - handle: audio_file
+          json_schema:
+            type: string
+            ui:widget: file
+            ui:options:
+              type: open-file
+        - handle: prompt
+          json_schema:
+            type: string
+            ui:widget: text
+      outputs_def:
+        - handle: language
+          json_schema:
+            type: string
+        - handle: text
+          json_schema:
+            type: string
+        - handle: segments
+          description: Output
+          json_schema:
+            type: array
+            items:
+              type: object
+              properties:
+                begin:
+                  type: integer
+                end:
+                  type: integer
+                text:
+                  type: string
+                words:
+                  type: array
+                  item:
+                    type: object
+                    properties:
+                      word:
+                        type: string
+                      begin:
+                        type: integer
+                      end:
+                        type: integer
+      executor:
+        name: python
+        options:
+          language: python
+          source: |-
+            import whisper
+            import math
+
+            def main(inputs: dict):
+              mode = inputs["mode"]
+              audio_file = inputs["audio_file"]
+              prompt = inputs["prompt"]
+              if prompt.strip() == "":
+                prompt = None
+
+              model = whisper.load_model(mode)
+              result = model.transcribe(
+                audio_file, 
+                initial_prompt=prompt,
+                word_timestamps=True,
+              )
+              segments: list[dict] = []
+
+              for segment in result["segments"]:
+                words: list[dict] = []
+                segments.append({
+                  "begin": to_ms(segment["start"]),
+                  "end": to_ms(segment["end"]),
+                  "text": segment["text"],
+                  "words": words,
+                })
+                for word in segment["words"]:
+                  words.append({
+                    "word": word["word"],
+                    "begin": to_ms(word["start"]),
+                    "end": to_ms(word["end"]),
+                  })
+
+              return { 
+                "language": result["language"],
+                "text": result["text"],
+                "segments": segments,
+              }
+
+            def to_ms(timestamp: float):
+              return math.floor(timestamp * 1000.0)
+          spawn: false
+    title: "人声转文字（JSON）"
+    node_id: scriptlet:python#1
+    inputs_from:
+      - handle: mode
+        value: small
+      - handle: audio_file
+        value: /oomol-storage/audio/whydo.wav
+      - handle: prompt
+        value: ""
+  - task: transform::json_stringify
+    title: "Stringify JSON #1"
+    node_id: json_stringify#1
+    inputs_from:
+      - handle: space
+        value: 4
+      - handle: json
+        from_node:
+          - node_id: scriptlet:python#1
+            output_handle: segments
+  - task: file::file_writer
+    title: "Write File #1"
+    node_id: file_writer#1
+    inputs_from:
+      - handle: when_file_exists
+        value: override
+      - handle: file_name
+        value: record.srt.json
+      - handle: output_folder
+        value: /oomol-storage
+      - handle: create_folder_if_need
+        value: false
+      - handle: binary
+        from_node:
+          - node_id: string_encoder#1
+            output_handle: binary
+  - task: transform::string_encoder
+    title: "Encode String #1"
+    node_id: string_encoder#1
+    inputs_from:
+      - handle: encode
+        value: utf8
+      - handle: string
+        from_node:
+          - node_id: json_stringify#1
+            output_handle: string
+  - task:
+      ui:
+        default_width: 530
+      icon: ":logos:python:"
+      inputs_def:
+        - handle: segments
+          description: Input
+          json_schema:
+            type: array
+            items:
+              type: object
+              properties:
+                begin:
+                  type: integer
+                end:
+                  type: integer
+                text:
+                  type: string
+                words:
+                  type: array
+                  item:
+                    type: object
+                    properties:
+                      word:
+                        type: string
+                      begin:
+                        type: integer
+                      end:
+                        type: integer
+      outputs_def:
+        - handle: srt_content
+          description: Output
+          json_schema:
+            type: string
+      executor:
+        name: python
+        options:
+          language: python
+          source: >-
+            from oocana import Context
+
+
+            def main(inputs: dict, context: Context):
+              lines: list[str] = []
+
+              for index, segment in enumerate(inputs["segments"]):
+                begin = segment["begin"]
+                end = segment["end"]
+                text = segment["text"]
+
+                lines.append(f"{index + 1}")
+                lines.append(f"{to_timestamp(begin)} --> {to_timestamp(end)}")
+                lines.append(f"{text.replace("\n", " ")}\n")
+
+              return { "srt_content": "\n".join(lines) }
+
+            def to_timestamp(time):
+                total_seconds = time // 1000
+                milliseconds = time % 1000
+                seconds = total_seconds % 60
+                total_minutes = total_seconds // 60
+                minutes = total_minutes % 60
+                hours = total_minutes // 60
+
+                return f"{hours:02d}:{minutes:02d}:{seconds:02d},{milliseconds:03d}"
+          spawn: false
+    title: 转化为 SRT
+    node_id: +python#1
+    inputs_from:
+      - handle: in
+        value: ""
+        from_node:
+          - node_id: scriptlet:python#1
+            output_handle: segments
+      - handle: segments
+        from_node:
+          - node_id: scriptlet:python#1
+            output_handle: segments
+  - task: transform::string_encoder
+    title: "Encode String #2"
+    node_id: string_encoder#2
+    inputs_from:
+      - handle: encode
+        value: utf8
+      - handle: string
+        from_node:
+          - node_id: +python#1
+            output_handle: srt_content
+  - task: file::file_writer
+    title: "Write File #2"
+    node_id: file_writer#2
+    inputs_from:
+      - handle: create_folder_if_need
+        value: false
+      - handle: when_file_exists
+        value: override
+      - handle: binary
+        from_node:
+          - node_id: string_encoder#2
+            output_handle: binary
+      - handle: output_folder
+        value: /oomol-storage
+      - handle: file_name
+        value: record.srt

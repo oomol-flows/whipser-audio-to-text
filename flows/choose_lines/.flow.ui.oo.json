@@ -1,0 +1,262 @@
+{
+  "nodes": [
+    {
+      "id": "scriptlet:python#1",
+      "contentWidth": 501.1221923828125,
+      "selected": true,
+      "dragging": false,
+      "position": {
+        "x": 157.21795136917228,
+        "y": 65
+      },
+      "positionAbsolute": {
+        "x": 157.21795136917228,
+        "y": 65
+      },
+      "width": 513,
+      "height": 971
+    },
+    {
+      "id": "json_stringify#1",
+      "contentWidth": 200,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 728,
+        "y": 65
+      },
+      "positionAbsolute": {
+        "x": 724.7104761904761,
+        "y": 68.28952380952381
+      },
+      "width": 212,
+      "height": 186
+    },
+    {
+      "id": "file_writer#1",
+      "contentWidth": 200,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 1218.8685714285714,
+        "y": 64
+      },
+      "positionAbsolute": {
+        "x": 1218.8685714285714,
+        "y": 64
+      },
+      "width": 212,
+      "height": 183
+    },
+    {
+      "id": "string_encoder#1",
+      "contentWidth": 200,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 975.1580952380953,
+        "y": 64
+      },
+      "positionAbsolute": {
+        "x": 975.1580952380953,
+        "y": 62.80698412698413
+      },
+      "width": 212,
+      "height": 124
+    },
+    {
+      "id": "+python#1",
+      "contentWidth": 578.8458251953125,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 728,
+        "y": 294.7329575109087
+      },
+      "positionAbsolute": {
+        "x": 724.8110999666955,
+        "y": 294.7329575109087
+      },
+      "width": 591,
+      "height": 560
+    },
+    {
+      "id": "string_encoder#2",
+      "contentWidth": 200,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 1352.9744482088024,
+        "y": 294.7329575109087
+      },
+      "positionAbsolute": {
+        "x": 1352.9744482088024,
+        "y": 292.3150714991193
+      },
+      "width": 212,
+      "height": 124
+    },
+    {
+      "id": "file_writer#2",
+      "contentWidth": 200,
+      "selected": false,
+      "dragging": false,
+      "position": {
+        "x": 1602.9782577326118,
+        "y": 294.7329575109087
+      },
+      "positionAbsolute": {
+        "x": 1602.9782577326118,
+        "y": 287.9290397530876
+      },
+      "width": 212,
+      "height": 183
+    }
+  ],
+  "edges": [
+    {
+      "id": "48126c2e-a8a4-42ed-b71b-21bff052eeb3",
+      "selected": true,
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "scriptlet:python#1",
+            "output_handle": "segments"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "json_stringify#1",
+            "input_handle": "json"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
+      "id": "126c2ea8-a4c2-4d77-9b21-bff052eeb3c4",
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "string_encoder#1",
+            "output_handle": "binary"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "file_writer#1",
+            "input_handle": "binary"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
+      "id": "6c2ea8a4-c2ed-471b-a1bf-f052eeb3c4c8",
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "json_stringify#1",
+            "output_handle": "string"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "string_encoder#1",
+            "input_handle": "string"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
+      "style": {
+        "--edge-linear-gradient-start": "var(--edge-json)",
+        "--edge-linear-gradient-end": "var(--edge-json)"
+      },
+      "id": "e10b2175-03d9-4014-a3b2-4d0cacf998ad",
+      "selected": true,
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "scriptlet:python#1",
+            "output_handle": "segments"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "+python#1",
+            "input_handle": "segments"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
+      "id": "2ea8a4c2-ed77-4b21-bff0-52eeb3c4c8b9",
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "+python#1",
+            "output_handle": "srt_content"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "string_encoder#2",
+            "input_handle": "string"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
+      "id": "a8a4c2ed-771b-41bf-b052-eeb3c4c8b957",
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "string_encoder#2",
+            "output_handle": "binary"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "file_writer#2",
+            "input_handle": "binary"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    }
+  ]
+}
