@@ -3,7 +3,7 @@
     {
       "id": "scriptlet:python#1",
       "contentWidth": 501.1221923828125,
-      "selected": true,
+      "selected": false,
       "dragging": false,
       "position": {
         "x": 157.21795136917228,
@@ -14,7 +14,7 @@
         "y": 65
       },
       "width": 513,
-      "height": 971
+      "height": 1001
     },
     {
       "id": "json_stringify#1",
@@ -78,7 +78,7 @@
         "y": 294.7329575109087
       },
       "width": 591,
-      "height": 560
+      "height": 590
     },
     {
       "id": "string_encoder#2",
@@ -111,12 +111,45 @@
       },
       "width": 212,
       "height": 183
+    },
+    {
+      "id": "download_url#1",
+      "contentWidth": 530,
+      "position": {
+        "x": -631.7823677598782,
+        "y": 94.3005336200539
+      },
+      "width": 542,
+      "height": 152
     }
   ],
   "edges": [
     {
+      "id": "b386fe18-00b6-4e7e-a14b-32a3d4db6492",
+      "connection": {
+        "from": {
+          "type": "from_node",
+          "source": {
+            "node_id": "download_url#1",
+            "output_handle": "file_address"
+          }
+        },
+        "to": {
+          "type": "to_node",
+          "target": {
+            "node_id": "scriptlet:python#1",
+            "input_handle": "audio_file"
+          }
+        }
+      },
+      "gradientColor": [
+        "var(--edge-json)",
+        "var(--edge-json)"
+      ]
+    },
+    {
       "id": "48126c2e-a8a4-42ed-b71b-21bff052eeb3",
-      "selected": true,
+      "selected": false,
       "connection": {
         "from": {
           "type": "from_node",
@@ -190,7 +223,7 @@
         "--edge-linear-gradient-end": "var(--edge-json)"
       },
       "id": "e10b2175-03d9-4014-a3b2-4d0cacf998ad",
-      "selected": true,
+      "selected": false,
       "connection": {
         "from": {
           "type": "from_node",

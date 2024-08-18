@@ -110,6 +110,9 @@ nodes:
         value: small
       - handle: audio_file
         value: /oomol-storage/audio/whydo.wav
+        from_node:
+          - node_id: download_url#1
+            output_handle: file_address
       - handle: prompt
         value: ""
   - task: transform::json_stringify
@@ -252,3 +255,18 @@ nodes:
         value: /oomol-storage
       - handle: file_name
         value: record.srt
+  - task: self::download_url
+    node_id: download_url#1
+    inputs_from:
+      - handle: in
+        value: ""
+      - handle: name
+        value: "oomol_audio.mp3"
+      - handle: local_folder
+        value: "/oomol-storage"
+      - handle: url_online
+        value: "https://oomol-flows.oss-cn-hangzhou.aliyuncs.com/1723958346_oomol_audio\
+          .mp3"
+      - handle: online_url
+        value: "https://oomol-flows.oss-cn-hangzhou.aliyuncs.com/1723958449_oomol_audio\
+          .mp3"

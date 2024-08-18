@@ -1,3 +1,7 @@
 {
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@types/download": "^8.0.5",
+    "download": "^8.0.0"
+  }
 }
