@@ -3,6 +3,9 @@
     {
       "id": "scriptlet:python#1",
       "contentWidth": 501.1221923828125,
+      "cardCollapse": {
+        "scriptlet": true
+      },
       "selected": false,
       "dragging": false,
       "position": {
@@ -13,8 +16,8 @@
         "x": 157.21795136917228,
         "y": 65
       },
-      "width": 513,
-      "height": 1001
+      "width": 515,
+      "height": 399
     },
     {
       "id": "json_stringify#1",
@@ -29,8 +32,8 @@
         "x": 724.7104761904761,
         "y": 68.28952380952381
       },
-      "width": 212,
-      "height": 186
+      "width": 434,
+      "height": 267
     },
     {
       "id": "file_writer#1",
@@ -38,15 +41,15 @@
       "selected": false,
       "dragging": false,
       "position": {
-        "x": 1218.8685714285714,
-        "y": 64
+        "x": 1644.749880120881,
+        "y": -148.94065434615482
       },
       "positionAbsolute": {
-        "x": 1218.8685714285714,
-        "y": 64
+        "x": 1644.749880120881,
+        "y": -150.57865937958684
       },
-      "width": 212,
-      "height": 183
+      "width": 434,
+      "height": 322
     },
     {
       "id": "string_encoder#1",
@@ -54,31 +57,34 @@
       "selected": false,
       "dragging": false,
       "position": {
-        "x": 975.1580952380953,
-        "y": 64
+        "x": 1145.5106187150188,
+        "y": -148.94065434615482
       },
       "positionAbsolute": {
-        "x": 975.1580952380953,
-        "y": 62.80698412698413
+        "x": 1145.5106187150188,
+        "y": -148.94065434615482
       },
-      "width": 212,
-      "height": 124
+      "width": 434,
+      "height": 267
     },
     {
       "id": "+python#1",
       "contentWidth": 578.8458251953125,
+      "cardCollapse": {
+        "scriptlet": true
+      },
       "selected": false,
       "dragging": false,
       "position": {
         "x": 728,
-        "y": 294.7329575109087
+        "y": 370.0811890487789
       },
       "positionAbsolute": {
-        "x": 724.8110999666955,
-        "y": 294.7329575109087
+        "x": 734.5520201337279,
+        "y": 370.0811890487789
       },
-      "width": 591,
-      "height": 590
+      "width": 593,
+      "height": 279
     },
     {
       "id": "string_encoder#2",
@@ -86,15 +92,15 @@
       "selected": false,
       "dragging": false,
       "position": {
-        "x": 1352.9744482088024,
-        "y": 294.7329575109087
+        "x": 1386.8329271790626,
+        "y": 429.0493702523294
       },
       "positionAbsolute": {
-        "x": 1352.9744482088024,
-        "y": 292.3150714991193
+        "x": 1390.6485639777377,
+        "y": 429.0493702523294
       },
-      "width": 212,
-      "height": 124
+      "width": 434,
+      "height": 267
     },
     {
       "id": "file_writer#2",
@@ -102,25 +108,31 @@
       "selected": false,
       "dragging": false,
       "position": {
-        "x": 1602.9782577326118,
-        "y": 294.7329575109087
+        "x": 1882.4399328588688,
+        "y": 300.80436994382706
       },
       "positionAbsolute": {
-        "x": 1602.9782577326118,
-        "y": 287.9290397530876
+        "x": 1882.4399328588688,
+        "y": 300.80436994382706
       },
-      "width": 212,
-      "height": 183
+      "width": 434,
+      "height": 322
     },
     {
       "id": "download_url#1",
       "contentWidth": 530,
+      "selected": false,
+      "dragging": false,
       "position": {
-        "x": -631.7823677598782,
-        "y": 94.3005336200539
+        "x": -425.8009058996944,
+        "y": 55.4924321101642
       },
-      "width": 542,
-      "height": 152
+      "positionAbsolute": {
+        "x": -425.8009058996944,
+        "y": 55.4924321101642
+      },
+      "width": 544,
+      "height": 297
     }
   ],
   "edges": [
@@ -173,6 +185,7 @@
     },
     {
       "id": "126c2ea8-a4c2-4d77-9b21-bff052eeb3c4",
+      "selected": false,
       "connection": {
         "from": {
           "type": "from_node",
@@ -196,6 +209,7 @@
     },
     {
       "id": "6c2ea8a4-c2ed-471b-a1bf-f052eeb3c4c8",
+      "selected": false,
       "connection": {
         "from": {
           "type": "from_node",

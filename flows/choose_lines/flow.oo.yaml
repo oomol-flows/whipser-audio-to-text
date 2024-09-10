@@ -59,49 +59,7 @@ nodes:
       executor:
         name: python
         options:
-          language: python
-          source: |-
-            import whisper
-            import math
-
-            def main(inputs: dict):
-              mode = inputs["mode"]
-              audio_file = inputs["audio_file"]
-              prompt = inputs["prompt"]
-              if prompt.strip() == "":
-                prompt = None
-
-              model = whisper.load_model(mode)
-              result = model.transcribe(
-                audio_file, 
-                initial_prompt=prompt,
-                word_timestamps=True,
-              )
-              segments: list[dict] = []
-
-              for segment in result["segments"]:
-                words: list[dict] = []
-                segments.append({
-                  "begin": to_ms(segment["start"]),
-                  "end": to_ms(segment["end"]),
-                  "text": segment["text"],
-                  "words": words,
-                })
-                for word in segment["words"]:
-                  words.append({
-                    "word": word["word"],
-                    "begin": to_ms(word["start"]),
-                    "end": to_ms(word["end"]),
-                  })
-
-              return { 
-                "language": result["language"],
-                "text": result["text"],
-                "segments": segments,
-              }
-
-            def to_ms(timestamp: float):
-              return math.floor(timestamp * 1000.0)
+          entry: scriptlets/scriptlet+python#1.py
           spawn: false
     title: "人声转文字（JSON）"
     node_id: scriptlet:python#1
@@ -189,33 +147,7 @@ nodes:
         name: python
         options:
           language: python
-          source: >-
-            from oocana import Context
-
-
-            def main(inputs: dict, context: Context):
-              lines: list[str] = []
-
-              for index, segment in enumerate(inputs["segments"]):
-                begin = segment["begin"]
-                end = segment["end"]
-                text = segment["text"]
-
-                lines.append(f"{index + 1}")
-                lines.append(f"{to_timestamp(begin)} --> {to_timestamp(end)}")
-                lines.append(f"{text.replace("\n", " ")}\n")
-
-              return { "srt_content": "\n".join(lines) }
-
-            def to_timestamp(time):
-                total_seconds = time // 1000
-                milliseconds = time % 1000
-                seconds = total_seconds % 60
-                total_minutes = total_seconds // 60
-                minutes = total_minutes % 60
-                hours = total_minutes // 60
-
-                return f"{hours:02d}:{minutes:02d}:{seconds:02d},{milliseconds:03d}"
+          entry: scriptlets/+python#1.py
           spawn: false
     title: 转化为 SRT
     node_id: +python#1
@@ -252,7 +184,7 @@ nodes:
           - node_id: string_encoder#2
             output_handle: binary
       - handle: output_folder
-        value: /oomol-storage
+        value: "/oomol-storage"
       - handle: file_name
         value: record.srt
   - task: self::download_url
