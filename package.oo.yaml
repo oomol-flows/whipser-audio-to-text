@@ -1,0 +1,9 @@
+icon: https://oomol-flows.oss-cn-hangzhou.aliyuncs.com/1723878239_whipser-audio-to-text-v2.png
+scripts:
+  # Script executed when the container is first loaded
+  # eg: bootstrap: pip install pandas
+  bootstrap: |
+    sudo apt-get update
+    sudo apt-get install -y ffmpeg
+    pnpm install
+    pip install -r requirements.txt
